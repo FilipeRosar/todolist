@@ -33,8 +33,7 @@ public class TratadorGlobalException {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleTreatValidation(
-            MethodArgumentNotValidException exception,
-            HttpServletRequest request
+            MethodArgumentNotValidException exception
     ){
         Map<String, String> error = new HashMap<>();
         for (FieldError erro: exception.getBindingResult().getFieldErrors()) {
