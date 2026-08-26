@@ -47,10 +47,9 @@ public class TarefaServiceTest {
                 tarefaId,
                 "Estudar Java",
                 StatusTarefa.PENDENTE,
-                LevelDifucult.LOW,
                 LocalDateTime.now(),
                 null,
-                null
+                LevelDifucult.LOW
         );
     }
     @Test

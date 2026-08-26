@@ -5,6 +5,8 @@ import { type Tarefa } from '@/interfaces/tarefamodel';
 import { buscarTarefas,cadastrarTarefa, deleteUsuario,buscarPorId } from './services/tarefasService';
 
 
+
+
 </script>
 
 <template>

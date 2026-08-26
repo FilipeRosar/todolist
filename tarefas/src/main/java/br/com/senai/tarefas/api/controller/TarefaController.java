@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -33,8 +35,8 @@ public class TarefaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(tarefaCadastrada);
     }
     @GetMapping
-    public ResponseEntity<Page<TarefaResponseDTO>> getAllTarefas(Pageable pageable){
-        return ResponseEntity.ok(tarefaService.getAllTarefas(pageable));
+    public ResponseEntity<List<TarefaResponseDTO>> getAllTarefas(){
+        return ResponseEntity.of(Optional.ofNullable(tarefaService.getAllTarefas()));
     }
     @PutMapping("/{tarefaId}")
     public ResponseEntity<Void> update(@PathVariable("tarefaId") @RequestBody @Valid UUID id,

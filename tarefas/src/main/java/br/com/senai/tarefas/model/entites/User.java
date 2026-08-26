@@ -27,7 +27,7 @@ public class User {
     @Column(nullable = false, length = 80)
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tarefa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tarefa> tarefa = new ArrayList<>();
 
 }

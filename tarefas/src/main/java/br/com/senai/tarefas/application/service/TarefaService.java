@@ -1,20 +1,19 @@
 package br.com.senai.tarefas.application.service;
 
 
-import br.com.senai.tarefas.application.dto.CreateTarefaDTO;
-import br.com.senai.tarefas.application.dto.TarefaResponseDTO;
-import br.com.senai.tarefas.application.dto.UpdateTarefaDTO;
+import br.com.senai.tarefas.application.dto.tarefaDTOs.CreateTarefaDTO;
+import br.com.senai.tarefas.application.dto.tarefaDTOs.TarefaResponseDTO;
+import br.com.senai.tarefas.application.dto.tarefaDTOs.UpdateTarefaDTO;
 import br.com.senai.tarefas.infrastructure.exception.RecursoNaoEncontradoException;
 import br.com.senai.tarefas.model.entites.Tarefa;
 import br.com.senai.tarefas.model.enumered.StatusTarefa;
 import br.com.senai.tarefas.repository.TarefaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 
@@ -41,10 +40,10 @@ public class TarefaService {
                 .map(this::toDto)
                 .toList();
     }
-    public Optional<TarefaResponseDTO> findTarefaById(UUID id){
-        return Optional.of(repository.findById(id)
+    public TarefaResponseDTO findTarefaById(UUID id){
+        return repository.findById(id)
                 .map(this::toDto)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada")));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
     }
 
     public void updateTarefaDTO(UUID id, UpdateTarefaDTO dto){
@@ -72,8 +71,10 @@ public class TarefaService {
 
     private TarefaResponseDTO toDto(Tarefa tarefa){
         return new TarefaResponseDTO(
+                tarefa.getId(),
                 tarefa.getDescricao(),
-                tarefa.getDataCriacao()
+                tarefa.getDataCriacao(),
+                tarefa.getStatus()
         );
     }
 

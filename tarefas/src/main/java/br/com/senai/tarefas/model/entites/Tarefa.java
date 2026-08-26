@@ -1,5 +1,6 @@
 package br.com.senai.tarefas.model.entites;
 
+import br.com.senai.tarefas.model.enumered.LevelDifucult;
 import br.com.senai.tarefas.model.enumered.StatusTarefa;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -43,6 +44,15 @@ public class Tarefa
     @UpdateTimestamp
     @JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
     private LocalDateTime dataUpdate;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private LevelDifucult level;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
 
     @PrePersist
     public void antesDeSalvar(){
