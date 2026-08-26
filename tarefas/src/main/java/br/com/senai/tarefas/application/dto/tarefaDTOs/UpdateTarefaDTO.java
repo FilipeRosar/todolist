@@ -1,4 +1,4 @@
-package br.com.senai.tarefas.application.dto;
+package br.com.senai.tarefas.application.dto.tarefaDTOs;
 
 import java.time.LocalDateTime;
 

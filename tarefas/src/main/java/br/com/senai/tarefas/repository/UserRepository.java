@@ -1,0 +1,12 @@
+package br.com.senai.tarefas.repository;
+
+import br.com.senai.tarefas.model.entites.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID> {
+    UUID id(UUID id);
+}
