@@ -1,6 +1,6 @@
 package br.com.senai.tarefas.model.entites;
 
-import br.com.senai.tarefas.model.enumered.LevelDifucult;
+import br.com.senai.tarefas.model.enumered.LevelDifficulty;
 import br.com.senai.tarefas.model.enumered.StatusTarefa;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -46,21 +46,13 @@ public class Tarefa
     private LocalDateTime dataUpdate;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
-    private LevelDifucult level;
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'LOW'")
+    @Builder.Default
+    private LevelDifficulty level = LevelDifficulty.LOW;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private User user;
 
 
-    @PrePersist
-    public void antesDeSalvar(){
-        if(status == null){
-            status = StatusTarefa.PENDENTE;
-        }
-        if (dataCriacao == null){
-            dataCriacao = LocalDateTime.now();
-        }
-    }
 }

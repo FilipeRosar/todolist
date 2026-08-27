@@ -4,6 +4,7 @@ import br.com.senai.tarefas.application.dto.tarefaDTOs.CreateTarefaDTO;
 import br.com.senai.tarefas.application.dto.tarefaDTOs.TarefaResponseDTO;
 import br.com.senai.tarefas.application.dto.tarefaDTOs.UpdateTarefaDTO;
 import br.com.senai.tarefas.application.service.TarefaService;
+import br.com.senai.tarefas.model.enumered.LevelDifficulty;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,7 +42,7 @@ public class TarefaController {
     @PutMapping("/{tarefaId}")
     public ResponseEntity<Void> update(@PathVariable("tarefaId") @RequestBody @Valid UUID id,
                                        @Valid @RequestBody UpdateTarefaDTO dto){
-        tarefaService.updateTarefaDTO(id,dto);
+        tarefaService.updateTarefa(id,dto);
         return ResponseEntity.noContent().build();
     }
     @DeleteMapping("/{id}")
@@ -52,6 +53,11 @@ public class TarefaController {
     @PatchMapping("/{id}")
     public ResponseEntity<Void> concluir(@Valid @PathVariable @RequestBody UUID id){
         tarefaService.finishedTarefa(id);
+        return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/{id}/level")
+    public ResponseEntity<Void> switchLevel(@Valid @PathVariable @RequestBody UUID id, LevelDifficulty newLevel){
+        tarefaService.changeDificultLevel(id, newLevel);
         return ResponseEntity.noContent().build();
     }
 }

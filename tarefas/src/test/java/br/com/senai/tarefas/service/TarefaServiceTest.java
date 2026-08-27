@@ -4,7 +4,7 @@ import br.com.senai.tarefas.application.dto.tarefaDTOs.TarefaResponseDTO;
 import br.com.senai.tarefas.application.service.TarefaService;
 import br.com.senai.tarefas.infrastructure.exception.RecursoNaoEncontradoException;
 import br.com.senai.tarefas.model.entites.Tarefa;
-import br.com.senai.tarefas.model.enumered.LevelDifucult;
+import br.com.senai.tarefas.model.enumered.LevelDifficulty;
 import br.com.senai.tarefas.model.enumered.StatusTarefa;
 import br.com.senai.tarefas.repository.TarefaRepository;
 import br.com.senai.tarefas.repository.UserRepository;
@@ -38,10 +38,13 @@ public class TarefaServiceTest {
 
     private UUID tarefaId;
     private Tarefa tarefa;
+    private UUID userId;
 
     @BeforeEach
     void setUp(){
         tarefaId = UUID.randomUUID();
+
+        var user = userRepository.findById(userId);
 
         tarefa = new Tarefa(
                 tarefaId,
@@ -49,7 +52,8 @@ public class TarefaServiceTest {
                 StatusTarefa.PENDENTE,
                 LocalDateTime.now(),
                 null,
-                LevelDifucult.LOW
+                LevelDifficulty.LOW,
+                user.get()
         );
     }
     @Test

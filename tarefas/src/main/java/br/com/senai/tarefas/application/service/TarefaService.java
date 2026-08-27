@@ -6,8 +6,11 @@ import br.com.senai.tarefas.application.dto.tarefaDTOs.TarefaResponseDTO;
 import br.com.senai.tarefas.application.dto.tarefaDTOs.UpdateTarefaDTO;
 import br.com.senai.tarefas.infrastructure.exception.RecursoNaoEncontradoException;
 import br.com.senai.tarefas.model.entites.Tarefa;
+import br.com.senai.tarefas.model.enumered.LevelDifficulty;
 import br.com.senai.tarefas.model.enumered.StatusTarefa;
 import br.com.senai.tarefas.repository.TarefaRepository;
+import br.com.senai.tarefas.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,9 +24,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TarefaService {
     private final TarefaRepository repository;
+    private final UserRepository userRepository;
 
     public UUID cadastrar(CreateTarefaDTO dto){
         Tarefa tarefa = new Tarefa();
+
+        tarefa.setUser(userRepository.findById(dto.userId())
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuario não encontrado")));
 
         tarefa.setDescricao(dto.descricao());
 
@@ -46,7 +53,8 @@ public class TarefaService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
     }
 
-    public void updateTarefaDTO(UUID id, UpdateTarefaDTO dto){
+    @Transactional
+    public void updateTarefa(UUID id, UpdateTarefaDTO dto){
         var tarefaId = repository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
 
@@ -54,6 +62,7 @@ public class TarefaService {
         tarefaId.setDataUpdate(dto.updated());
     }
 
+    @Transactional
     public void deleteById(UUID id){
         var tarefaId = repository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
@@ -62,11 +71,22 @@ public class TarefaService {
         repository.save(tarefaId);
 
     }
+    @Transactional
     public void finishedTarefa(UUID id){
         var tarefaId = repository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
         tarefaId.setStatus(StatusTarefa.CONCLUIDA);
         repository.save(tarefaId);
+    }
+
+    @Transactional
+    public void changeDificultLevel(UUID id, LevelDifficulty novoNivel){
+        var tarefaId = repository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
+        tarefaId.setLevel(novoNivel);
+
+        repository.save(tarefaId);
+
     }
 
     private TarefaResponseDTO toDto(Tarefa tarefa){

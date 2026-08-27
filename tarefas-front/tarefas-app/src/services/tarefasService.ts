@@ -1,7 +1,7 @@
 import { type Tarefa } from "@/interfaces/tarefamodel";
 import api from "@/integration/api.js";
 
-const ROTA_BASE = 'api/v1/tarefas'
+const ROTA_BASE = 'api/v1/tarefa'
 
 export async function cadastrarTarefa(dto: Tarefa): Promise<Tarefa> {
    try{
@@ -39,5 +39,12 @@ export async function buscarPorId(id: string): Promise<Tarefa> {
       console.error(`Erro ao pegar id ${id}`);
       throw error;
    }
-   
+}
+export async function alternarDificuldade(id: string): Promise<void> {
+   try{
+      await api.patch(`${ROTA_BASE}/${id}/level`);
+   } catch(error){
+      console.error(`Erro ao alternar dificuldade da tarefa ${id}: `, error);
+      throw error;
+   }
 }
