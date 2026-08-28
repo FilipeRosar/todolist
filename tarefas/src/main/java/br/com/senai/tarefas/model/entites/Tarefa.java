@@ -34,7 +34,7 @@ public class Tarefa
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private StatusTarefa status;
+    private StatusTarefa status = StatusTarefa.PENDENTE;
 
     @CreationTimestamp
     @Column(nullable = false)
@@ -51,7 +51,7 @@ public class Tarefa
     private LevelDifficulty level = LevelDifficulty.LOW;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
 

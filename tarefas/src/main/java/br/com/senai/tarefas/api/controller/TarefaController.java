@@ -46,7 +46,7 @@ public class TarefaController {
         return ResponseEntity.noContent().build();
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTarefa(@Valid @RequestBody UUID id){
+    public ResponseEntity<Void> deleteTarefa(@PathVariable UUID id){
         tarefaService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
@@ -56,8 +56,8 @@ public class TarefaController {
         return ResponseEntity.noContent().build();
     }
     @PatchMapping("/{id}/level")
-    public ResponseEntity<Void> switchLevel(@Valid @PathVariable @RequestBody UUID id, LevelDifficulty newLevel){
-        tarefaService.changeDificultLevel(id, newLevel);
+    public ResponseEntity<Void> switchLevel(@PathVariable UUID id,@RequestParam("novoNivel") LevelDifficulty novoNivel){
+        tarefaService.changeDificultLevel(id, novoNivel);
         return ResponseEntity.noContent().build();
     }
 }

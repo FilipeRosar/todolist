@@ -1,9 +1,9 @@
-import { type Tarefa } from "@/interfaces/tarefamodel";
+import { type CadastrarTarefaDTO, type LevelDificuldade, type Tarefa } from "@/interfaces/tarefamodel";
 import api from "@/integration/api.js";
 
 const ROTA_BASE = 'api/v1/tarefa'
 
-export async function cadastrarTarefa(dto: Tarefa): Promise<Tarefa> {
+export async function cadastrarTarefa(dto: CadastrarTarefaDTO): Promise<Tarefa> {
    try{
       const response = await api.post<Tarefa>(`${ROTA_BASE}/cadastrar`, dto);
       return response.data;
@@ -40,9 +40,11 @@ export async function buscarPorId(id: string): Promise<Tarefa> {
       throw error;
    }
 }
-export async function alternarDificuldade(id: string): Promise<void> {
+export async function alternarDificuldade(id: string, novoNivel?: LevelDificuldade): Promise<void> {
    try{
-      await api.patch(`${ROTA_BASE}/${id}/level`);
+      await api.patch(`${ROTA_BASE}/${id}/level`, null, {
+         params: { novoNivel :  novoNivel }
+      });
    } catch(error){
       console.error(`Erro ao alternar dificuldade da tarefa ${id}: `, error);
       throw error;

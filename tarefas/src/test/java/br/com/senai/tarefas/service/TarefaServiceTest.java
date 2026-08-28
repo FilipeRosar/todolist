@@ -81,4 +81,13 @@ public class TarefaServiceTest {
         verify(repository, times(1))
                 .findById(tarefaId);
     }
+
+    @Test
+    void deveExcluirPorIdComSucesso(){
+        when(repository.findById(any(UUID.class))).thenReturn(Optional.of(tarefa));
+
+        tarefaService.deleteById(tarefaId);
+
+        verify(repository, times(1)).delete(tarefa);
+    }
 }

@@ -8,10 +8,10 @@ export interface Tarefa {
     id?: string | undefined;
     descricao: string;
     status?: StatusTarefa;
-    dificuldade?: LevelDificuldade;
+    level?: LevelDificuldade;
     dataCriacao?: Date;
-    dataConclusao?: Date;
-    user?: User;
+    dataUpdate?: Date;
+    user: User;
 }
 
 export interface User{

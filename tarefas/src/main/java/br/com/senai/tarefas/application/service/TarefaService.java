@@ -34,6 +34,8 @@ public class TarefaService {
 
         tarefa.setDescricao(dto.descricao());
 
+        tarefa.setLevel(LevelDifficulty.MEDIUM);
+
         tarefa.setDataCriacao(LocalDateTime.now());
 
         tarefa.setStatus(StatusTarefa.PENDENTE);
@@ -68,7 +70,6 @@ public class TarefaService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
 
         repository.deleteById(tarefaId.getId());
-        repository.save(tarefaId);
 
     }
     @Transactional

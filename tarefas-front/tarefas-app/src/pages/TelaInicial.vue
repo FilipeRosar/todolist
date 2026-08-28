@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';
   import { buscarTarefas, deleteUsuario, alternarDificuldade, cadastrarTarefa, buscarPorId } from '@/services/tarefasService';
-  import { type User, type Tarefa, type CadastrarTarefaDTO } from '@/interfaces/tarefamodel';
+  import { type User, type Tarefa, type CadastrarTarefaDTO, type LevelDificuldade } from '@/interfaces/tarefamodel';
   import { buscarUsuarios } from '@/services/userService';
 
   const tarefas = ref<Tarefa[]>([]);
@@ -9,6 +9,8 @@
   const usuarios = ref<User[]>([]);
   const usersId = ref<string | null>(null);
   const loading = ref(false);
+  const levels: LevelDificuldade[] = ['LOW', 'MEDIUM', 'HIGH']
+  
 
   async function loadList() {
     loading.value = true;
@@ -30,8 +32,15 @@
       return;
     }
     try{
-      await cadastrarTarefa({descricao: descricao.value, userId: usersId.value} as CadastrarTarefaDTO);
+      const payload: CadastrarTarefaDTO = {
+        descricao: descricao.value,
+        userId: usersId.value
+      };
+      await cadastrarTarefa(payload);
+
       descricao.value = '';
+      usersId.value = '';
+
       await loadList();
     } catch (error) {
       console.error(error);
@@ -49,9 +58,13 @@
       }
     }
   }
-  async function handleAlternarDificuldade(id: string){
+  async function handleAlternarDificuldade(id: string, event: Event){
+    const target = event.target as HTMLSelectElement;
+
+    const novoNivel = target.value as LevelDificuldade;
+
     try{
-      await alternarDificuldade(id);
+      await alternarDificuldade(id, novoNivel);
       await loadList();
     } catch (error) {
       console.error(error);
@@ -103,9 +116,17 @@
             <tr v-for="tarefa in tarefas" :key="tarefa.id">
               <td>{{ tarefa.descricao }}</td>
               <td> 
-                <button type="button" @click="tarefa.id && handleAlternarDificuldade(tarefa.id)">{{ tarefa.dificuldade || 'LOW' }}</button>
+                <select :value="tarefa.level || 'LOW'" 
+                @change="e => tarefa.id && handleAlternarDificuldade(tarefa.id, e)" 
+                class="select-dificuldade">
+                
+                <option 
+                v-for="nivel in levels" :key="nivel"
+                :value="nivel">{{ nivel }}</option>
+              </select>
+              
               </td>
-              <td>{{ tarefa.user?.name || 'Nenhuma pessoa atribuída' }}</td>
+              <td>{{ tarefa.user.name || "Usuario desconhecido"}}</td>
               <td>
                 <button type="button" @click="tarefa.id && handleDelete(tarefa.id)">Excluir</button>
               </td>
@@ -139,8 +160,8 @@
   }
 
   th, td {
-    border: 1px solid #ccc;
+    border: 1px solid #734f4f;
     padding: 8px;
-    text-align: left;
+    text-align: center;
   }
 </style>

@@ -1,5 +1,6 @@
 package br.com.senai.tarefas.application.dto.tarefaDTOs;
 
+import br.com.senai.tarefas.model.enumered.LevelDifficulty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -13,6 +14,7 @@ public record CreateTarefaDTO(
                 message = "A descrição deve possuir entre 3 e 150 caracteres")
         String descricao,
         @NotNull(message = "O usuário é obrigatório.")
-        UUID userId
+        UUID userId,
+        LevelDifficulty levelDificuldade
 ) {
 }
