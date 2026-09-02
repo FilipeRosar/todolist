@@ -126,7 +126,7 @@
               </select>
               
               </td>
-              <td>{{ tarefa.user.name || "Usuario desconhecido"}}</td>
+              <td>{{ tarefa.user?.name || "Usuario desconhecido"}}</td>
               <td>
                 <button type="button" @click="tarefa.id && handleDelete(tarefa.id)">Excluir</button>
               </td>

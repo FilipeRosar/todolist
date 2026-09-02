@@ -5,6 +5,7 @@ import br.com.senai.tarefas.application.dto.tarefaDTOs.TarefaResponseDTO;
 import br.com.senai.tarefas.application.dto.userDTOs.CreateUserDTO;
 import br.com.senai.tarefas.application.dto.userDTOs.UpdateUserDTO;
 import br.com.senai.tarefas.application.dto.userDTOs.UserResponseDTO;
+import br.com.senai.tarefas.application.dto.userDTOs.UserResumoDTO;
 import br.com.senai.tarefas.infrastructure.exception.RecursoNaoEncontradoException;
 import br.com.senai.tarefas.model.entites.Tarefa;
 import br.com.senai.tarefas.model.entites.User;
@@ -77,7 +78,13 @@ public class UserService {
                 tarefa.getId(),
                 tarefa.getDescricao(),
                 tarefa.getDataCriacao(),
-                tarefa.getStatus()
+                tarefa.getStatus(),
+                tarefa.getLevel(),
+                new UserResumoDTO(
+                        tarefa.getUser().getId(),
+                        tarefa.getUser().getName(),
+                        tarefa.getUser().getEmail()
+                )
         );
     }
 

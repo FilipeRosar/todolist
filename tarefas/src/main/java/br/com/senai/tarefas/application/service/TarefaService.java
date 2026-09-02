@@ -4,6 +4,7 @@ package br.com.senai.tarefas.application.service;
 import br.com.senai.tarefas.application.dto.tarefaDTOs.CreateTarefaDTO;
 import br.com.senai.tarefas.application.dto.tarefaDTOs.TarefaResponseDTO;
 import br.com.senai.tarefas.application.dto.tarefaDTOs.UpdateTarefaDTO;
+import br.com.senai.tarefas.application.dto.userDTOs.UserResumoDTO;
 import br.com.senai.tarefas.infrastructure.exception.RecursoNaoEncontradoException;
 import br.com.senai.tarefas.model.entites.Tarefa;
 import br.com.senai.tarefas.model.enumered.LevelDifficulty;
@@ -34,7 +35,11 @@ public class TarefaService {
 
         tarefa.setDescricao(dto.descricao());
 
-        tarefa.setLevel(LevelDifficulty.MEDIUM);
+        tarefa.setLevel(dto.levelDificuldade() != null
+                ? dto.levelDificuldade()
+                : LevelDifficulty.MEDIUM);
+
+        tarefa.setDone(false);
 
         tarefa.setDataCriacao(LocalDateTime.now());
 
@@ -76,6 +81,7 @@ public class TarefaService {
     public void finishedTarefa(UUID id){
         var tarefaId = repository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
+        tarefaId.setDone(true);
         tarefaId.setStatus(StatusTarefa.CONCLUIDA);
         repository.save(tarefaId);
     }
@@ -95,7 +101,14 @@ public class TarefaService {
                 tarefa.getId(),
                 tarefa.getDescricao(),
                 tarefa.getDataCriacao(),
-                tarefa.getStatus()
+                tarefa.isDone(),
+                tarefa.getStatus(),
+                tarefa.getLevel(),
+                new UserResumoDTO(
+                        tarefa.getUser().getId(),
+                        tarefa.getUser().getName(),
+                        tarefa.getUser().getEmail()
+                )
         );
     }
 
