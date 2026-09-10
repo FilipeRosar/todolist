@@ -67,6 +67,7 @@ npm install
 # Execute o servidor de desenvolvimento
 npm run dev
 
+
 🎓 Contexto Acadêmico
 
 Este projeto foi desenvolvido como requisito de avaliação para o curso de  Desenvolvimento de Sistemas, demonstrando a aplicação prática de:
