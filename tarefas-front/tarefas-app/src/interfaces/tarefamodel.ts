@@ -21,5 +21,8 @@ export interface User{
 export interface CadastrarTarefaDTO{
     descricao: string;
     userId: string;
-    levelDificuldade?: LevelDificuldade;
+    levelDificuldade: LevelDificuldade;
+}
+export interface AtualizarTarefaDTO{
+    descricao?: string;
 }

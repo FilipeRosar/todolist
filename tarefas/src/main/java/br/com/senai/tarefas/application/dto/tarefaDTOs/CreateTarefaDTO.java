@@ -15,6 +15,7 @@ public record CreateTarefaDTO(
         String descricao,
         @NotNull(message = "O usuário é obrigatório.")
         UUID userId,
+        @NotNull(message = "A dificuldade é obrigatória.")
         LevelDifficulty levelDificuldade
 ) {
 }

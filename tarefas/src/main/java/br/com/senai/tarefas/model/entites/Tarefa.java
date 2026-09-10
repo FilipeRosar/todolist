@@ -50,7 +50,9 @@ public class Tarefa
     @Builder.Default
     private LevelDifficulty level = LevelDifficulty.LOW;
 
-    private boolean done;
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    @Builder.Default
+    private boolean done = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)

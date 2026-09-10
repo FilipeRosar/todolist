@@ -1,6 +1,7 @@
 package br.com.senai.tarefas.application.service;
 
 
+
 import br.com.senai.tarefas.application.dto.tarefaDTOs.CreateTarefaDTO;
 import br.com.senai.tarefas.application.dto.tarefaDTOs.TarefaResponseDTO;
 import br.com.senai.tarefas.application.dto.tarefaDTOs.UpdateTarefaDTO;
@@ -35,9 +36,7 @@ public class TarefaService {
 
         tarefa.setDescricao(dto.descricao());
 
-        tarefa.setLevel(dto.levelDificuldade() != null
-                ? dto.levelDificuldade()
-                : LevelDifficulty.MEDIUM);
+        tarefa.setLevel(dto.levelDificuldade());
 
         tarefa.setDone(false);
 
@@ -66,7 +65,7 @@ public class TarefaService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Tarefa não encontrada"));
 
         tarefaId.setDescricao(dto.descricao());
-        tarefaId.setDataUpdate(dto.updated());
+        tarefaId.setDataUpdate(LocalDateTime.now());
     }
 
     @Transactional

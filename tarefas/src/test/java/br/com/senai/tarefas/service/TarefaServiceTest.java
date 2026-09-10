@@ -53,6 +53,7 @@ public class TarefaServiceTest {
                 LocalDateTime.now(),
                 null,
                 LevelDifficulty.LOW,
+                false,
                 user.get()
         );
     }

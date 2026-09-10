@@ -78,6 +78,7 @@ public class UserService {
                 tarefa.getId(),
                 tarefa.getDescricao(),
                 tarefa.getDataCriacao(),
+                tarefa.isDone(),
                 tarefa.getStatus(),
                 tarefa.getLevel(),
                 new UserResumoDTO(

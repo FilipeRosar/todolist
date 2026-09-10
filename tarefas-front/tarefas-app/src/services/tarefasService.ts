@@ -1,4 +1,4 @@
-import { type CadastrarTarefaDTO, type LevelDificuldade, type Tarefa } from "@/interfaces/tarefamodel";
+import { type AtualizarTarefaDTO, type CadastrarTarefaDTO, type LevelDificuldade, type Tarefa } from "@/interfaces/tarefamodel";
 import api from "@/integration/api.js";
 
 const ROTA_BASE = 'api/v1/tarefa'
@@ -23,7 +23,7 @@ export async function buscarTarefas(): Promise<Tarefa[]>{
     throw error;
    }
 }
-export async function deleteUsuario(id: String): Promise<void> {
+export async function deleteTarefa(id: String): Promise<void> {
    try{
      await api.delete(`${ROTA_BASE}/${id}`)
    } catch(error){
@@ -37,6 +37,15 @@ export async function buscarPorId(id: string): Promise<Tarefa> {
       return response.data;
    } catch(error){
       console.error(`Erro ao pegar id ${id}`);
+      throw error;
+   }
+}
+export async function atualizarTarefa(id: string, dto: AtualizarTarefaDTO): Promise<Tarefa>{
+   try{
+      const response = await api.put(`${ROTA_BASE}/${id}`, dto);
+      return response.data;
+   } catch(error){
+      console.error(`Erro ao atualizar a tarefa ${id}: `, error);
       throw error;
    }
 }
