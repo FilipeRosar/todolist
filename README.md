@@ -45,7 +45,7 @@ Uma aplicação web completa para gerenciamento de tarefas e produtividade, dese
 
 ```bash
 # Clone o repositório
-git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+git clone https://github.com/FilipeRosar/todolist.git
 
 # Acesse a pasta do backend
 cd seu-repositorio/backend
